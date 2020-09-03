@@ -1,3 +1,3 @@
 # hello-world
-My first repo.
-I like cars.
+Hello
+My name is kevin
