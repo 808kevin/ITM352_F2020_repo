@@ -9,4 +9,5 @@ body {
     background-color: Ivory;
 }
 
-Img {float; left;}
+img {float: left;
+}
