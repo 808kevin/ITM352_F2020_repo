@@ -6,8 +6,9 @@ body {
     color: darkblue;
     margin: 10px 50px 10px 50px;
     width: 950px;
-    background-color: Ivory;
+    Background-color: Ivory;
 }
 
-img {float: left;
+img {
+    float: left;
 }
