@@ -13,8 +13,21 @@
         var last_name = "<big> Nguyen </big>";
         var full_name = first_name + " " + middle_name + " " + last_name;
         var formatted_name = full_name + '<br>'+ first_name [4] + '.' + last_name [6] + '.';
-
         document.write(formatted_name);
+
+        var firstname = "<b> Kevin </b>";
+        var middlename = "<i> Rick </i>";
+        var lastname = "<big> Nguyen </big>";
+        var fullname = '<br>'+ firstname + '<br>' + middlename + '<br>' + lastname;
+        var formatted_name = fullname + '<br>'+ firstname [4] + '.' + lastname [6] + '.';
+        document.write(formatted_name);
+
+        
+        var bill = 20.00;
+        var tax = bill*0.413;
+        var taxDecimals= '<br>' + "The tax on " + first_name + "'s bill is " + tax + ".";
+        document.write(taxDecimals);
+        
     </script>
     <div id="ageDiv">
 
@@ -24,7 +37,7 @@
 <script>
     var stupid;
     age = 19;
-    var numberOfKids = 100000;
+    var numberOfKids = 1;
     document.getElementById('ageDiv').innerHTML = "I want " + numberOfKids*age*stupid +  " kids!"
 
 </script>
