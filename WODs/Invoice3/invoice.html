@@ -1,0 +1,143 @@
+<script>
+  /* This file makes a receipt of products bought */
+
+  // Product Data
+
+  // Product 1
+  var item1 = 'Work VSXX Wheels';
+  var quantity1 = 1;
+  var price1 = 2800;
+
+  // Product 2
+  var item2 = 'BC Racing Coilovers';
+  var quantity2 = 1;
+  var price2 = 1200;
+
+  // Product 3
+  var item3 = 'Likewise Weighted Shift Knob';
+  var quantity3 = 1;
+  var price3 = 100;
+
+  // Product 4
+  var item4 = 'Double Din Screen';
+  var quantity4 = 1;
+  var price4 = 350;
+
+  // Product 5
+  var item5 = 'Subs';
+  var quantity5 = 1;
+  var price5 = 150;
+
+  //Subtotal
+  var subtotal = 0;
+
+
+</script>
+
+<body>
+
+  <table border="2">
+    <tbody>
+
+      <tr>
+        <th style="text-align: center;" width="43%">Item</th>
+        <th style="text-align: center;" width="11%">quantity</th>
+        <th style="text-align: center;" width="13%">price</th>
+        <th style="text-align: center;" width="54%">extended price</th>
+      </tr>
+
+      <script>
+        var extended_price = quantity1 * price1;
+        var subtotal = extended_price + subtotal;
+        document.write(`
+          <tr>
+            <td width="43%">${item1}</td>
+            <td align="center" width="11%">${quantity1}</td>
+            <td width="13%">\$${price1}</td>
+            <td width="54%">\$${extended_price}</td>
+          </tr>
+        `)
+        var extended_price = quantity2 * price2;
+        var subtotal = extended_price + subtotal;
+        document.write(`
+          <tr>
+            <td width="43%">${item2}</td>
+            <td align="center" width="11%">${quantity2}</td>
+            <td width="13%">\$${price2}</td>
+            <td width="54%">\$${extended_price}</td>
+          </tr>
+        `)
+        var extended_price = quantity3 * price3;
+        var subtotal = extended_price + subtotal;
+        document.write(`
+          <tr>
+            <td width="43%">${item3}</td>
+            <td align="center" width="11%">${quantity3}</td>
+            <td width="13%">\$${price3}</td>
+            <td width="54%">\$${extended_price}</td>
+          </tr>
+        `)
+        var extended_price = quantity4 * price4;
+        var subtotal = extended_price + subtotal;
+        document.write(`
+          <tr>
+            <td width="43%">${item4}</td>
+            <td align="center" width="11%">${quantity4}</td>
+            <td width="13%">\$${price4}</td>
+            <td width="54%">\$${extended_price}</td>
+          </tr>
+        `)
+        var extended_price = quantity5 * price5;
+        var subtotal = extended_price + subtotal;
+        document.write(`
+          <tr>
+            <td width="43%">${item5}</td>
+            <td align="center" width="11%">${quantity5}</td>
+            <td width="13%">\$${price5}</td>
+            <td width="54%">\$${extended_price}</td>
+          </tr>
+        `)
+
+        // Tax 
+        var tax_rate = 0.0575
+        var tax = tax_rate * subtotal
+
+        // Grand Total
+        var total = subtotal + tax
+
+      </script>
+      <tr>
+        <td colspan="4" width="100%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td style="text-align: center;" colspan="3" width="67%">Sub-total</td>
+        <td width="54%">
+          <script>document.write(subtotal)</script>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: center;" colspan="3" width="67%"><span style="font-family: arial;">Tax @ 5.75%</span>
+        </td>
+        <td width="54%">
+          <script>document.write(tax.toFixed(2))</script>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: center;" colspan="3" width="67%"><strong>Total</strong></td>
+        <td width="54%">
+          <script>document.write(total.toFixed(2))</script>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+
+
+
+
+
+
+
+</body>
