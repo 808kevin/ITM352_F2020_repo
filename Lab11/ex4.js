@@ -19,6 +19,5 @@ function isNonNegIntString(string_to_check, returnErrors=false) {
 console.log(`${part} is non neg int ${isNonNegIntString(part, true).join("***")} `)
    };
 
-   pieces.forEach(function(item,i){ console.log(typeof item == 'string' && item.length > 0)?true:false )});
-   
+   pieces.forEach(function(item,i){ console.log(typeof item == 'string' && item.length > 0)?true:false})
     

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        function isNonNegInt(string_to_check, returnErrors = false) {
+            errors = [];
+            if (Number(string_to_check) != string_to_check) { errors.push('Not a number!'); }
+
+            else {
+                if (string_to_check < 0) errors.push('Negative value!');
+                if (parseInt(string_to_check) != string_to_check) errors.push('Not an integer!');
+            
+                
+            }
+            return returnErrors ? errors : ((errors.length > 0) ? false : true);
+        }
+            function checkQuantityTextbox() {
+                quantity_textbox_message.innerHTML = inNonNegInt(quantity_textbox.value, true).join(" ");
+
+            
+        }
+
+        function displayPurchase (purchase_qty) {
+            if(isNonNegInt(purchase_qty)){document.write(`Thank for you for ordering ${purchase_qty} things!`);
+            
+        } else {
+            checkQuantityTextbox();
+        }
+}
+    </script>
+</head>
+
+<body>
+    <label for="quantity_textbox">quantity desired:</label>
+    <input type="text" id="quantity_textbox" onkeyup="checkQuantityTextbox();">
+    <span id='quantity_textbox_message'>Enter a quantity</span>
+    <br>
+    <input type="button" value = "Purchase" onclick="displayPurchase();">
+</body>
+
+</html>

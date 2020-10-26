@@ -1,0 +1,143 @@
+<script>
+  /* This file makes a receipt of products bought */
+
+  // Product Data
+var products = [
+    {
+        "brand": "HTC",
+        "price": 40.00,
+        "image": "http://dport96.github.io/ITM352/morea/080.flow-control-II/HTC.jpg"
+    },
+    {
+        "brand": "Apple",
+        "price": 75.00,
+        "image": "http://dport96.github.io/ITM352/morea/080.flow-control-II/iphone-3gs.jpg"
+    },
+    {
+        "brand": "Nokia",
+        "price": 35.00,
+        "image": "http://dport96.github.io/ITM352/morea/080.flow-control-II/Nokia.jpg"
+    },
+    {
+        "brand": "Samsung",
+        "price": 45.00,
+        "image": "http://dport96.github.io/ITM352/morea/080.flow-control-II/Samsung.jpg"
+    },
+    {
+        "brand": "Blackberry",
+        "price": 10.00,
+        "image": "http://dport96.github.io/ITM352/morea/080.flow-control-II/Blackberry.jpg"
+    }
+];
+
+var quantities = [3,-1,2.5,-3.5,"four"]
+
+function generate_item_rows(product_quantities_array) {
+for (i=0; i<product_quantities_array.length; i++){
+  qty = product_quantities_array[i];
+  errs = isNonNegIntString(qty, true);
+  
+  if (qty == 0) {
+    continue;
+  }
+  if (errs.length ==0){
+  
+  extended_price = product_quantities_array[i] * products[i].price;
+  subtotal = extended_price + subtotal;
+  } else {
+    qty = `<span style="color:red;">${qty}<br>${errs.join("<br>")}</span>`
+  }
+
+        document.write(`
+          <tr>
+            <td width="43%">${products[i].brand}</td>
+            <td align="center" width="11%">${qty}</td>
+            <td width="13%">\$${products[i].price}</td>
+            <td width="54%">\$${extended_price}</td>
+          </tr>
+        `)
+}
+}
+function isNonNegIntString(string_to_check, returnErrors=false) {
+   /*This function returns true if string_to_check is a non-negative integer. If returnErrors=true it will return the array of the reasons it is not a non-negative integer
+   */
+
+   errors = []; // assume no errors at first
+   if(Number(string_to_check) != string_to_check) errors.push('Not a number!'); // Check if string is a number value
+
+   if(string_to_check < 0) errors.push('Negative value!'); // Check if it is non-negative
+
+   if(parseInt(string_to_check) != string_to_check) errors.push('Not an integer!'); // Check that it is an integer
+
+   return returnErrors ? errors : (errors.length == 0);
+   }
+
+
+  //Subtotal
+  var subtotal = 0;
+
+
+</script>
+
+<body>
+
+  <table border="2">
+    <tbody>
+
+      <tr>
+        <th style="text-align: center;" width="43%">Item</th>
+        <th style="text-align: center;" width="11%">quantity</th>
+        <th style="text-align: center;" width="13%">price</th>
+        <th style="text-align: center;" width="54%">extended price</th>
+      </tr>
+
+      <script>
+      //Product Row 1 
+
+      generate_item_rows(quantities)
+
+      
+
+        // Tax 
+        var tax_rate = 0.0575
+        var tax = tax_rate * subtotal
+
+        // Grand Total
+        var total = subtotal + tax
+
+      </script>
+      <tr>
+        <td colspan="4" width="100%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td style="text-align: center;" colspan="3" width="67%">Sub-total</td>
+        <td width="54%">
+          <script>document.write(subtotal)</script>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: center;" colspan="3" width="67%"><span style="font-family: arial;">Tax @ 5.75%</span>
+        </td>
+        <td width="54%">
+          <script>document.write(tax.toFixed(2))</script>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: center;" colspan="3" width="67%"><strong>Total</strong></td>
+        <td width="54%">
+          <script>document.write(total.toFixed(2))</script>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+
+
+
+
+
+
+
+</body>
