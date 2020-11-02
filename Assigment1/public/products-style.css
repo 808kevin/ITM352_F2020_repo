@@ -1,0 +1,23 @@
+/* General */ 
+body {
+width: 800px; 
+margin: 0 auto;
+}
+
+/* Styling the products display */ 
+img {
+width:300px;
+height:300px;
+}
+
+/* Typography */  
+h1, h2 {
+text-align: center;
+}
+
+/* block styling */  
+main {
+display: flex;
+flex-flow: row wrap;
+justify-content: space-around;
+}
