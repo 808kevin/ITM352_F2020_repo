@@ -12,8 +12,6 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="index.css">
-
 <!--Font used for text-->
 <style>
   .w3-sidebar a {
@@ -60,7 +58,7 @@
     <br>
     <br>
     <div class="w3-container w3-text-black" id="Rings">
-      <h2>Rings</h2>
+      <p>Rings</p>
     </div>
 
     <!-- Product grid -->
@@ -69,77 +67,78 @@
     
     <form action="./process_form" method="POST">
 
-      <!--Product loop-->
-     <main>
-     <script>
+      <!-- Couldn't figure out loop to make it all form as neatly as it is now, since this one looks better than my loop attempt one I'm going to submit this one and hopefully be able to get assistance on how to make loop one look nice -->
+
+      <!--Product 1-->
+      <script>
 
 
-        for ( i = 0; i < products.length; i++ ) {
-
-document.write(`<section class="item"> 
-        <h2>${products[i].name}</h2> 
-        <p>${products[i].price}</p> 
-        <img src=${products[i].image}>
-        <input type = "text" placeholder = "0" name = "quantity${i}">`);
-        
-    }
       </script>
-      </main>  
-  <!--This is the submit button to send user to the invoice-->
+      <div>
+        <div class="w3-col l3 s6">
+          <div class="w3-container">
+            <img src="./images/Diamond.jpg" style="width:100%">
+            <p>Diamond Ring<br><b>$300.00</b></p>
+            <input type="text" placeholder="0" name="quantity0">
+          </div>
+          <br>
+
+          <!--Product 2-->
+          <div class="w3-container">
+            <img src="./images/DiamondPlumeria.jpg" style="width:100%">
+            <p>Diamond Plumeria Ring<br><b>$350.00</b></p>
+            <input type="text" placeholder="0" name="quantity1">
+          </div>
+        </div>
+
+        <!--Product 3-->
+        <div class="w3-col l3 s6">
+          <div class="w3-container">
+            <div class="w3-display-container">
+              <img src="./images/EngravedHeart.jpg" style="width:100%">
+              <div class="w3-display-middle w3-display-hover">
+              </div>
+            </div>
+            <p>Engraved Heart Ring<br><b>$200.00</b></p>
+            <input type="text" placeholder="0" name="quantity2">
+          </div>
+
+          <!--Product 4-->
+          <br>
+          <div class="w3-container">
+            <img src="./images/BoP.jpg" style="width:100%">
+            <p>Bird of Paradise Ring<br><b>$250.00</b></p>
+            <input type="text" placeholder="0" name="quantity3">
+          </div>
+        </div>
+
+        <!--Product 5-->
+        <div class="w3-col l3 s6">
+          <div class="w3-container">
+            <img src="./images/Hibiscus.jpg" style="width:100%">
+            <p>Hibiscus Ring<br><b>$200.00</b></p>
+            <input type="text" placeholder="0" name="quantity4">
+          </div>
+          <br>
+          <!--Product 6-->
+          <div class="w3-container">
+            <div class="w3-display-container">
+              <img src="./images/HibiscusEnamal.jpg" style="width:100%">
+              <div class="w3-display-middle w3-display-hover">
+              </div>
+            </div>
+            <p>Enamaled Hibiscus Ring<br><b>$250.00</b></p>
+            <input type="text" placeholder="0" name="quantity5">
+          </div>
+        </div>
+
+      </div>
+      
+      
+<!--This is the submit button to send user to the invoice-->
       <input type="submit" value="Purchase" name="purchase_submit">
-    
-    
+
+
 </body>
 
 </html>
-
-<script>
-  // Code from Assignment1 example & Lab13
-
-  // functions to do checking
-  function isNonNegInt(q, return_errors = false) {
-      errors = []; // assume no errors at first
-      if (q == '') q = 0; // handle blank inputs as if they are 0
-      if (Number(q) != q) errors.push('<font color="red">Please put a number!</font>'); // Check if string is a number value
-      else if (q < 0) errors.push('<font color="red">Negative value!</font>'); // Check if it is non-negative
-      else if (parseInt(q) != q) errors.push('<font color="red">Not an integer!</font>'); // Check that it is an integer
-      return return_errors ? errors : (errors.length == 0);
-  }
-  function checkQuantityTextbox(theTextbox) {
-      errs = isNonNegInt(theTextbox.value, true);
-      if (errs.length == 0) errs = ['Quantity:'];
-      if (theTextbox.value.trim() == '') errs = ['Quantity:'];
-      document.getElementById(theTextbox.name + '_label').innerHTML = errs.join(", ");
-  }
-  //get parameters from query string
-  window.onload = function () {
-      let params = (new URL(document.location)).searchParams; // get the query string which has the form data
-      // form was submitted so check that quantities are valid then redirect to invoice if ok.
-      if (params.has('purchase_submit')) {
-          has_errors = false; // assume quantities are valid from the start
-          total_qty = 0; // need to check if something was selected so we will look if the total > 0
-          for (i = 0; i < products.length; i++) {
-              if (params.has(`quantity${i}`)) {
-                  a_qty = params.get(`quantity${i}`);
-                  // make textboxes sticky in case of invalid data
-                  product_selection_form[`quantity${i}`].value = a_qty;
-                  total_qty += a_qty;
-                  if (!isNonNegInt(a_qty)) {
-                      has_errors = true; // oops, invalid quantity
-                      checkQuantityTextbox(product_selection_form[`quantity${i}`]); // show where the error is
-                  }
-              }
-          }
-          // Now respond to errors or redirect to invoice if all is ok
-          if (has_errors) {
-              alert("Please enter only valid quantities!");
-          } else if (total_qty == 0) { // no quantity selections, just give a general alert
-              alert("Please select quantities!");
-          } else { // when it is all good to go, the server will send client to invoice
-              window.location = `./invoice.html${document.location.search}`;
-              window.stop;
-          }
-      }
-  }
-
-</script>

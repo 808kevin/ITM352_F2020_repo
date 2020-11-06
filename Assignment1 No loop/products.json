@@ -4,31 +4,31 @@
     {
         "name": "Diamond",
         "price": 300.00,
-        "image": "Diamond.jpg"
+        "image": "images/Diamond.jpg"
     },
     {
         "name": "Diamond Plumeria",
         "price": 350.00,
-        "image": "DiamondPlumeria.jpg"
+        "image": "images/DiamondPlumeria.jpg"
     },
     {
         "name": "Engraved Heart",
         "price": 200.00,
-        "image": "EngravedHeart.jpg"
+        "image": "images/EngravedHeart.jpg"
     },
     {
         "name": "Hibiscus",
         "price": 200.00,
-        "image": "Hibiscus.jpg"
+        "image": "images/Hibiscus.jpg"
     },
     {
         "name": "Hibiscus Enamal",
         "price": 250.00,
-        "image": "HibiscusEnamal.jpg"
+        "image": "images/HibiscusEnamal.jpg"
     },
     {
         "name": "Bird of Paradise",
         "price": 250.00,
-        "image": "BoP.jpg"
+        "image": "images/BoP.jpg"
     }
 ]
