@@ -27,7 +27,7 @@ app.use(myParser.urlencoded({ extended: true }));
 app.post("/process_form", function (request, response, next) {
     //console.log(request.body);  
     
-// Code from Lab13
+// Code from Lab13 along with assistance from Daphne Oh 
     //Validate purchase data. Check each quantity is non negative integer or blank.
     var validqty = true; //Check for valid input. 
     var totlpurchases = false; //Check there were any input and not all 0.
