@@ -27,7 +27,7 @@ app.use(myParser.urlencoded({ extended: true }));
 app.post("/process_form", function (request, response, next) {
     //console.log(request.body);  
     
-// Code put together from Lab13
+// Code from Lab13
     //Validate purchase data. Check each quantity is non negative integer or blank.
     var validqty = true; //Check for valid input. 
     var totlpurchases = false; //Check there were any input and not all 0.
@@ -44,7 +44,6 @@ app.post("/process_form", function (request, response, next) {
         // Create query string of quantity data for invoice. 
         purchase_qs = qs.stringify(request.body);
         //If data is valid, then send to invoice. 
-
         if (validqty == true && totlpurchases == true) {
             response.redirect('./invoice.html?' + purchase_qs);
         }
@@ -54,16 +53,14 @@ app.post("/process_form", function (request, response, next) {
         }
     }
 
-
 });
 
 app.use(express.static('./public'));
 app.listen(8080, () => console.log(`listening on port 8080`));
 
+//Code from by Lab13 and Assignment1 Example
 function isNonNegIntString(string_to_check, returnErrors = false) {
-    /*
-    This function returns true if string_to_check is a non-negative integer. 
-     */
+    /* This function returns true if string_to_check is a non-negative integer.*/
     errors = []; // assume no errors at first
     if (Number(string_to_check) != string_to_check) { errors.push('Not a number!'); } // Check if string is a number value
     else {
