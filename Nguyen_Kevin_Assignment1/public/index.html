@@ -2,7 +2,7 @@
 <script id="products" src="./get_products" type="text/javascript">
 </script>
 
-<!-- Template borrowed from W3 Template and Bootstrap :) -->
+<!-- Template borrowed from W3 Template and Bootstrap  :) -->
 <!DOCTYPE html>
 <html>
 <title>Creative Jewelry</title>
@@ -15,7 +15,6 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="index.css">
 <!--Font used for text-->
 <style>
   .w3-sidebar a {
@@ -74,6 +73,7 @@
     <div>
       <main>
         <script>
+          // Bootstrap elements (div class) suggested by Daphne to make product loops form nicely
           for (i = 0; i < products.length; i++) {
 
             document.write(`<section class="item"> 
@@ -95,7 +95,6 @@
         </script>
       </main>
     </div>
-
 
     <!--This is the submit button to send user to the invoice-->
     <input type="submit" value="Purchase" name="purchase_submit">
