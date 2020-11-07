@@ -23,21 +23,20 @@ app.get("/get_products", function (request, response) {
 });
 
 app.use(myParser.urlencoded({ extended: true }));
-//Handles the post request from the purchase request. Validate data and send to invoice.
 app.post("/process_form", function (request, response, next) {
     //console.log(request.body);  
     
 // Code from Lab13 along with assistance from Daphne Oh 
     //Validate purchase data. Check each quantity is non negative integer or blank.
     var validqty = true; //Check for valid input. 
-    var totlpurchases = false; //Check there were any input and not all 0.
+    var totlpurchases = false; //Check if there were any inputs and blank.
     for (i = 0; i < products.length; i++) {
         aqty = request.body[`quantity${i}`];
         if (isNonNegIntString(aqty) == false) {
             validqty = false; //Invalid data 
 
         }
-        if (aqty > 0) { //No data waas input or was left blank.
+        if (aqty > 0) { //No input or was left blank.
             totlpurchases = true;
         }
 
