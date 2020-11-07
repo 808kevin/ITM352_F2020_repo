@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 <!--Font used for text-->
 <style>
   .w3-sidebar a {
@@ -85,7 +86,8 @@
                     <p>$${products[i].price}</p>
                     <div class="panel-footer"><label id="quantity${i}_label"}">Quantity</label>
                     <input type = "text" placeholder = "0" name = "quantity${i}" onkeyup="checkQuantityTextbox(this);">
-                   </div>
+                   
+                    </div>
                      </div>
               </div>
                     `);
@@ -96,10 +98,12 @@
       </main>
     </div>
 
+
     <!--This is the submit button to send user to the invoice-->
     <input type="submit" value="Purchase" name="purchase_submit">
+   
 
 
-    </body>
-
+    
+</div>
 </html>
