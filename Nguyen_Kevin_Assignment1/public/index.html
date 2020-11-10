@@ -13,7 +13,7 @@
 
     function checkQuantityTextbox(theTextbox) {
         errs = isNonNegInt(theTextbox.value, true);
-        if (errs.length == 0) errs = ['You want:'];
+        if (errs.length == 0) errs = ['You want:']; 
         if (theTextbox.value.trim() == '') errs = ['Quantity'];
         document.getElementById(theTextbox.name + '_label').innerHTML = errs.join(", ");
     }
@@ -91,7 +91,7 @@
     <div>
       <main>
         <script>
-          // Bootstrap elements (div class) suggested by Daphne to make product loops form nicely
+          // Bootstrap elements (div class) suggested by Daphne Oh to make product loops form nicely
           for (i = 0; i < products.length; i++) {
 
             document.write(`<section class="item"> 
