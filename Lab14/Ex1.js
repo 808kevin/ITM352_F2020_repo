@@ -21,11 +21,12 @@ if (fs.existsSync(user_data_filename)) {
 
 app.use(myParser.urlencoded({ extended: true }));
 
-app.get("/login", function (request, response) {
+app.get("/", function (request, response) {
     // Give a simple login form
     str = `
 <body>
 <form action="process_login" method="POST">
+<h1>Login</h1>
 <input type="text" name="username" size="40" placeholder="enter username" ><br />
 <input type="password" name="password" size="40" placeholder="enter password"><br />
 <input type="submit" value="Submit" id="submit">
@@ -46,7 +47,7 @@ app.post("/process_login", function (request, response) {
                 response.send(`Hey! ${request.body.username} does not match what we have for you!`);
             }
         } else {
-            response.send(`Hey! ${request.body.username} does not exits!`);
+            response.send(`Hey! ${request.body.username} does not exist!`);
         }
     });
         app.listen(8080, () => console.log(`listening on port 8080`));
