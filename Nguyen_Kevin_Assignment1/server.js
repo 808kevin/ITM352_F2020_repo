@@ -1,5 +1,5 @@
 //Code from Lab13 Ex4
-var express = require('express');
+var express = require('express'); 
 var app = express();
 var myParser = require("body-parser");
 var fs = require('fs');
@@ -9,7 +9,8 @@ var products = require('./products.json');
 var qs = require('querystring'); //allows the query string to become the info for the invoice 
 
 
-app.all('*', function (request, response, next) {
+app.all('*', function (request, response, next) 
+{
     console.log(request.method + ' to ' + request.path);
     next();
 });
@@ -18,8 +19,8 @@ app.get("/get_products", function (request, response) {
     // process_quantity_form(request.body, response);
     // Code from Professor Port :)
     response.type('.js');
-    console.log(" var products = " + JSON.stringify(products) + ";");
-    response.send(" var products = " + JSON.stringify(products) + ";");
+    console.log(" var products = " + JSON.stringify(products) + ";"); //gets the json string from url
+    response.send(" var products = " + JSON.stringify(products) + ";");//sends the json string thru
 });
 
 app.use(myParser.urlencoded({ extended: true }));
