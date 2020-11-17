@@ -1,9 +1,9 @@
 //Code from Lab13 Ex4
-var express = require('express'); 
-var app = express();
+var express = require('express'); //uses express
+var app = express();//gets express
 var myParser = require("body-parser");
 var fs = require('fs');
-var products = require('./products.json');
+var products = require('./products.json'); //gets stuff from products.json
 
 // Code from Professors Port :)
 var qs = require('querystring'); //allows the query string to become the info for the invoice 
