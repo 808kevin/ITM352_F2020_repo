@@ -40,17 +40,17 @@ app.post("/process_form", function (request, response, next) {
         if (aqty > 0) { //No input or was left blank.
             totlpurchases = true;
         }
-
-        // Create query string of quantity data for invoice. 
-        purchase_qs = qs.stringify(request.body);
-        //If data is valid, then send to invoice. 
-        if (validqty == true && totlpurchases == true) {
-            response.redirect('./invoice.html?' + purchase_qs);
-        }
-        //If data isn't valid reload main page. 
-        else {
-            response.redirect("./index.html?"); 
-        }
+    }
+    // ADD COMMENT here about rediriected on valid/invalid quanity data
+    // Create query string of quantity data for invoice. 
+    purchase_qs = qs.stringify(request.body);
+    //If data is valid, then send to invoice. 
+    if (validqty == true && totlpurchases == true) {
+        response.redirect('./invoice.html?' + purchase_qs);
+    }
+    //If data isn't valid reload main page. 
+    else {
+        response.redirect("./index.html?");
     }
 
 });
