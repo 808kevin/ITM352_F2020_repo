@@ -5,7 +5,7 @@
 <script>
   let params = (new URL(document.location)).searchParams;
   var quantities = [];
-  // form was submitted so process the invoice
+  // form was submitted to process the invoice
   if (params.has('purchase_submit')) {
     for (i = 0; i < products.length; i++) {
       if (params.has(`quantity${i}`)) {
