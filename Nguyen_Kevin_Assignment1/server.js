@@ -34,7 +34,7 @@ app.post("/process_form", function (request, response, next) {
     for (i = 0; i < products.length; i++) {
         aqty = request.body[`quantity${i}`];
         if (isNonNegIntString(aqty) == false) {
-            validqty = false; //Invalid data 
+            validqty &= false; //Invalid data 
 
         }
         if (aqty > 0) { //No input or was left blank.
@@ -62,6 +62,7 @@ app.listen(8080, () => console.log(`listening on port 8080`));
 function isNonNegIntString(string_to_check, returnErrors = false) {
     /* This function returns true if string_to_check is a non-negative integer.*/
     errors = []; // assume no errors at first
+    if(string_to_check == '') string_to_check = 0;
     if (Number(string_to_check) != string_to_check) { errors.push('Not a number!'); } // Check if string is a number value
     else {
         if (string_to_check < 0) errors.push('Negative value!'); // Check if it is non-negative
