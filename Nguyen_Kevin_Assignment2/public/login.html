@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <script>
+    //Alert for User/Password Error
+    let params = (new URL(document.location)).searchParams;
+    
+    window.onload = function () {
+        if (params.has('LogError')) {
+            alert('Invalid Username or Passowrd');
+        }
+    }
+    </script>
+    
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+<h1>Login</h1>
+<!--Code to make Login form from Lab14-->
+
+<form name="login" action="process_login" method="POST">
+  <div class="container"><br>
+      <input type="text" name="username" id="username" size="40" placeholder="Enter Username" required><br>
+      <input type="password" name="password" size="40" placeholder="Enter Password" onkeyup="" required><br> 
+      
+      <input type="submit" value="Login" name="login" class='btn'>
+      
+      
+  </div>
+</form>
+<script>
+//saves the query string from the products page for the invoice 
+login.action += document.location.search; 
+</script>
+<input type="button" name="newuser" value="Register Here!" class="btn2"
+   onclick="window.location='./register.html' + document.location.search;">
+
+</body>
+</html>
+
+
+
+
