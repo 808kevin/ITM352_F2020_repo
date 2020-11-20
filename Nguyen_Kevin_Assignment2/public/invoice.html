@@ -1,6 +1,8 @@
 <script id="products" src="./get_products" type="text/javascript">
 </script>
 
+<script src="./user_data.json" type="json"></script>
+
 <!-- Got this code from Assignment1 example-->
 <script>
   let params = (new URL(document.location)).searchParams;
@@ -13,12 +15,12 @@
         quantities[i] = a_qty;
       }
     }
-  } 
+  }
 
-        if (params.has('username')) {
-          var name = params.get('name');
-          var username = params.get('username');
-        }
+  if (params.has('username')) {
+    var name = params.get('name');
+    var username = params.get('username');
+  }
 </script>
 
 <!DOCTYPE html>
@@ -92,18 +94,26 @@
       <div class="panel panel-success">
         <div class="panel-body">
 
-          <!--An attempt to get username from https://www.youtube.com/watch?v=vOe0ysNsNCo-->
-          <body> Aloha <span id="result"></span>!
-          <script>
-          
-          {document.getElementById("result").innerHTML = localStorage.getItem("textvalue");
-          } 
-          
 
-          </script>
+          <!--An attempt to get username from https://www.youtube.com/watch?v=vOe0ysNsNCo-->
+
+          <body>
+
+            Aloha <span id="result"></span>!
+
+
+
+            <script>
+
+              {
+                document.getElementById("result").innerHTML = localStorage.getItem("textvalue");
+              }
+
+
+            </script>
 
           </body>
-          
+
           <tbody>
             <th style="text-align: center;" width="43%">Item</th>
             <th style="text-align: center;" width="11%">Quantity</th>

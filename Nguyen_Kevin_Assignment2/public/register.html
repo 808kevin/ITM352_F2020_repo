@@ -61,7 +61,7 @@
 
 
 </nav>
-<div class="w3-main" style="margin-left:450px">
+<div class="w3-main" style="margin-left:500px">
 
   <!-- Top header -->
   
@@ -85,7 +85,10 @@
         <div class="panel-body">
 
       <!--Referenced from Lab14, Stackoverflow and w3resources(for the patterns)-->
-      <input type="text" name="username2" size="40" pattern=".[a-z0-9]{4,10}$" required
+      <input type="text" name="fullname" size="40" pattern="[a-zA-Z]+[ ]+[a-zA-Z]+"
+      placeholder="Enter First & Last Name"><br/>
+
+      <input type="text" name="username" size="40" pattern=".[a-z0-9]{4,10}$" required
       title="Min: 4 Character, Max: 10 Characters, Numbers & Letters Only" placeholder="Enter Username"><br/>
 
       <input type="email" name="email" size="40" placeholder="Enter Email" pattern="[a-z0-9._]+@[a-z0-9]+\.[a-z]{2,}$" required title="Please enter valid email."><br/> 

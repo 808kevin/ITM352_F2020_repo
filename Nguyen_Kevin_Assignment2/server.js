@@ -10,8 +10,7 @@ var filename = 'user_data.json'
 var qs = require('querystring'); //allows the query string to become the info for the invoice 
 
 
-app.all('*', function (request, response, next) 
-{
+app.all('*', function (request, response, next) {
     console.log(request.method + ' to ' + request.path);
     next();
 });
@@ -41,8 +40,8 @@ app.post("/login_form", function (req, res) {
     var LogError = [];
     console.log(req.body);
     the_username = req.body.username.toLowerCase();// making username lowercase
-    if (typeof users_reg_data[the_username] != 'undefined'){
-        if (req.body.password == users_reg_data[req.body.username].password){ //redirects user to invoice after login
+    if (typeof users_reg_data[the_username] != 'undefined') {
+        if (req.body.password == users_reg_data[req.body.username].password) { //redirects user to invoice after login
             res.redirect('./invoice.html?' + purchase_qs);
 
         } else { //notifies user of invalid password (Borrowed from Alyssa)
@@ -52,69 +51,84 @@ app.post("/login_form", function (req, res) {
             req.query.name = users_reg_data[the_username].name;
             req.query.LogError = LogError.join(';');
         }
-        } else { //notifies user of invalid username (Borrowed from Alyssa)
-            LogError.push = ('Invalid Username');
-            console.log(LogError);
-            req.query.username = the_username;
-            req.query.LogError = LogError.join(';')
-        }
-        res.redirect('./login.html?' + purchase_qs);
+    } else { //notifies user of invalid username (Borrowed from Alyssa)
+        LogError.push = ('Invalid Username');
+        console.log(LogError);
+        req.query.username = the_username;
+        req.query.LogError = LogError.join(';')
+    }
+    res.redirect('./login.html?' + purchase_qs);
 });
 
 //Making Account / validatting account code 
-app.post ("/process_register", function (req, res) {
+app.post("/process_register", function (req, res) {
     var errors = [];
     var reguser = req.body.username.toLowerCase();
-    
+
     if (typeof users_reg_data[reguser] != 'undefined') {
         errors.push('Username Taken')
     }
-//Makes user use only letters and numbers 
-if (/^[0-9a-zA-Z]+$/.test(req.body.username)) {
-}
-else {
-  errors.push('Letters And Numbers Only for Username')
-}
-//Password character requirement
-if (req.body.password.length < 6) {
-    errors.push('Password Too Short')
-  }
-  // Making sure passwords are the same 
-  if (req.body.password !== req.body.repeat_password) { 
-    errors.push('Password Not a Match')
-  }
-  //Saves user's registration in user_data.json (Referenced from lab 14)
-  if (errors.length == 0) {
-    POST = req.body
-    console.log('no errors')
-    var username = POST['username'];
-    users_reg_data[username] = {}; //make it 'users'
-    users_reg_data[username].name = username;
-    users_reg_data[username].password= POST['password'];
-    users_reg_data[username].email = POST['email'];
-    data = JSON.stringify(users_reg_data); //change to users 
-    fs.writeFileSync(filename, data, "utf-8");
-    res.redirect('./invoice.html?' + purchase_qs);
-  }
-  //Keeping user at register page due to error/Logging it in console
-  if (errors.length > 0) {
-      console.log(errors)
-      req.query.name = req.body.name;
-      req.query.username = req.body.username;
-      req.query.password = req.body.password;
-      req.query.repeat_password = req.body.repeat_password;
-      req.query.email = req.body.email;
+    //Use of only letters for Full Name
+    if (/^[A-Za-z]+$/.test(req.body.name)) { 
+    }
+    else {
+        errors.push('Use Only Letters for Full Name');
+    }
+    // validating that it is a Full Name
+    if (req.body.name == "") {
+        errors.push('Invalid Full Name');
+    }
+    // length of full name is between 0 and 25 
+    if ((req.body.fullname.length > 25 && req.body.fullname.length < 0)) {
+        errors.push('Full Name Too Long');
+    }
 
-      req.query.errors = errors.join(';');
-      res.redirect('register.html?' + purchase_qs);
-  }
+    //Makes user use only letters and numbers 
+    if (/^[0-9a-zA-Z]+$/.test(req.body.username)) {
+    }
+    else {
+        errors.push('Letters And Numbers Only for Username')
+    }
+    //Password character requirement
+    if (req.body.password.length < 6) {
+        errors.push('Password Too Short')
+    }
+    // Making sure passwords are the same 
+    if (req.body.password !== req.body.repeat_password) {
+        errors.push('Password Not a Match')
+    }
+    //Saves user's registration in user_data.json (Referenced from lab 14)
+    if (errors.length == 0) {
+        POST = req.body
+        console.log('no errors')
+        var username = POST['username'];
+        users_reg_data[username] = {}; //make it 'users'
+        users_reg_data[username].name = username;
+        users_reg_data[username].password = POST['password'];
+        users_reg_data[username].email = POST['email'];
+        data = JSON.stringify(users_reg_data); //change to users 
+        fs.writeFileSync(filename, data, "utf-8");
+        res.redirect('./invoice.html?' + purchase_qs);
+    }
+    //Keeping user at register page due to error/Logging it in console
+    if (errors.length > 0) {
+        console.log(errors)
+        req.query.name = req.body.name;
+        req.query.username = req.body.username;
+        req.query.password = req.body.password;
+        req.query.repeat_password = req.body.repeat_password;
+        req.query.email = req.body.email;
+
+        req.query.errors = errors.join(';');
+        res.redirect('register.html?' + purchase_qs);
+    }
 });
 
 app.post("/process_form", function (request, response, next) {
     //console.log(request.body);  
 
-    
-// Code from Lab13 along with assistance from Daphne Oh 
+
+    // Code from Lab13 along with assistance from Daphne Oh 
     //Validate purchase data. Check each quantity is non negative integer or blank.
     var validqty = true; //Check for valid input. 
     var totlpurchases = false; //Check if there were any inputs and blank.
@@ -149,7 +163,7 @@ app.listen(8080, () => console.log(`listening on port 8080`));
 function isNonNegIntString(string_to_check, returnErrors = false) {
     /* This function returns true if string_to_check is a non-negative integer.*/
     errors = []; // assume no errors at first
-    if(string_to_check == '') string_to_check = 0;
+    if (string_to_check == '') string_to_check = 0;
     if (Number(string_to_check) != string_to_check) { errors.push('Not a number!'); } // Check if string is a number value
     else {
         if (string_to_check < 0) errors.push('Negative value!'); // Check if it is non-negative
