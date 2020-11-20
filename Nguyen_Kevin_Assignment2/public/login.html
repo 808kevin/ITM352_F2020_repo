@@ -22,8 +22,10 @@
 <h1>Login</h1>
 <!--Code to make Login form from Lab14-->
 
-<form name="login" action="process_login" method="POST">
-  <div class="container"><br>
+<form name="login_form" action="login_form" method="POST">
+
+  <div class="container">
+    <br>
       <input type="text" name="username" id="username" size="40" placeholder="Enter Username" required><br>
       <input type="password" name="password" size="40" placeholder="Enter Password" onkeyup="" required><br> 
       
@@ -32,16 +34,13 @@
       
   </div>
 </form>
-<script>
-//saves the query string from the products page for the invoice 
-login.action += document.location.search; 
-</script>
-<input type="button" name="newuser" value="Register Here!" class="btn2"
-   onclick="window.location='./register.html' + document.location.search;">
-
+<input type="button"  value="Register" id = "register"
+onclick="window.location='./register.html?' + document.location.search;">
 </body>
 </html>
 
-
+<script>
+  login_form.action += '?' + location.search;
+</script>
 
 
