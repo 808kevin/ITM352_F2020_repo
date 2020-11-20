@@ -2,7 +2,8 @@
 <html lang="en">
 
 <script>
-  //Alert for User/Password Error
+  
+  //Alert for User/Password Error (Referenced from Alyssa)
   let params = (new URL(document.location)).searchParams;
 
   window.onload = function () {
@@ -10,7 +11,19 @@
       alert('Invalid Username or Passowrd');
     }
   }
+
+
 </script>
+
+ <!--An attempt to get username from https://www.youtube.com/watch?v=vOe0ysNsNCo-->
+  <script> 
+  function passvalue()
+  {
+    var firstname = document.getElementById("username").value;
+    localStorage.setItem("textvalue", firstname);
+    return false;
+  }
+    </script>
 
 <head>
   <meta charset="UTF-8">
@@ -22,6 +35,10 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+  
+  
   <title>Document</title>
 </head>
 
@@ -80,7 +97,8 @@
               <input type="text" name="username" id="username" size="40" placeholder="Enter Username" required><br>
               <input type="password" name="password" size="40" placeholder="Enter Password" onkeyup="" required><br>
 
-              <input type="submit" value="Login" name="login" class='btn'>
+              <input type="submit" value="Login" name="login" class='btn' onclick="passvalue();">
+
               <input type="button" value="Register" id="register"
                 onclick="window.location='./register.html?' + document.location.search;">
 
@@ -92,5 +110,7 @@
 </html>
 
 <script>
-  login_form.action += '?' + location.search;
+  //saves the query string from the products page for the invoice
+  login_form.action += '?' + location.search; 
 </script>
+

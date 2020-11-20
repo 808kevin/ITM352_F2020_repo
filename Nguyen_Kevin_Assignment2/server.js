@@ -26,7 +26,7 @@ app.get("/get_products", function (request, response) {
 
 app.use(myParser.urlencoded({ extended: true }));
 
-//Referencing code from Alyssa, Daphne and Professor Port (big thanks to these people)
+//Borrowed code for processing login/registration is from Alyssa, Daphne and Professor Port (big thanks to these people)
 //Checking filename user_data.json
 if (fs.existsSync(filename)) {
     stats = fs.statSync(filename);
@@ -36,7 +36,7 @@ if (fs.existsSync(filename)) {
     console.log(`ERR: ${filename} does not exist!`);
 }
 
-//User Login code
+//User Login code (Referenced from Alyssa with assistance from Daphne)
 app.post("/login_form", function (req, res) {
     var LogError = [];
     console.log(req.body);
@@ -61,7 +61,7 @@ app.post("/login_form", function (req, res) {
         res.redirect('./login.html?' + purchase_qs);
 });
 
-//Making Account / validatting account code (Referenced from Alyssa and Daphne)
+//Making Account / validatting account code (Referenced from Alyssa with assistance from Daphne)
 app.post ("/process_register", function (req, res) {
     var errors = [];
     var reguser = req.body.username.toLowerCase();
@@ -69,21 +69,21 @@ app.post ("/process_register", function (req, res) {
     if (typeof users_reg_data[reguser] != 'undefined') {
         errors.push('Username Taken')
     }
-//Makes user use only letters and numbers
+//Makes user use only letters and numbers (Referenced from Alyssa with assistance from Daphne)
 if (/^[0-9a-zA-Z]+$/.test(req.body.username)) {
 }
 else {
   errors.push('Letters And Numbers Only for Username')
 }
-//Password character requirement
+//Password character requirement(Referenced from Alyssa with assistance from Daphne)
 if (req.body.password.length < 6) {
     errors.push('Password Too Short')
   }
-  // Making sure passwords are the same
+  // Making sure passwords are the same (Referenced from Alyssa with assistance from Daphne)
   if (req.body.password !== req.body.repeat_password) { 
     errors.push('Password Not a Match')
   }
-  //Saves user's registration in user_data.json (from lab 14)
+  //Saves user's registration in user_data.json (Referenced from lab 14)
   if (errors.length == 0) {
     POST = req.body
     console.log('no errors')
@@ -96,7 +96,7 @@ if (req.body.password.length < 6) {
     fs.writeFileSync(filename, data, "utf-8");
     res.redirect('./invoice.html?' + purchase_qs);
   }
-  //If there are errors log them in the console and direct user again to the register page
+  //Keeping user at register page due to error/Logging it in console
   if (errors.length > 0) {
       console.log(errors)
       req.query.name = req.body.name;

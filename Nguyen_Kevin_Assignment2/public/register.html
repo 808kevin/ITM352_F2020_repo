@@ -12,6 +12,16 @@
         }
     }
     </script>
+
+    <!--An attempt to get username from https://www.youtube.com/watch?v=vOe0ysNsNCo-->
+  <script> 
+    function passvalue()
+    {
+      var firstname = document.getElementById("username").value;
+      localStorage.setItem("textvalue2", firstname);
+      return false;
+    }
+      </script>
     
 <head>
   <meta charset="UTF-8">
@@ -68,6 +78,12 @@
   </div>
 
 <form method="POST" action="process_register" name="Register">
+
+  <div class="container">
+    <div class="col-sm-4">
+      <div class="panel panel-success">
+        <div class="panel-body">
+
       <!--Referenced from Lab14, Stackoverflow and w3resources(for the patterns)-->
       <input type="text" name="username" size="40" pattern=".[a-z0-9]{4,10}$" required
       title="Min: 4 Character, Max: 10 Characters, Numbers & Letters Only" placeholder="Enter Username"><br/>
@@ -80,14 +96,19 @@
       <input type="password" id="repeat_password" name="repeat_password" size="40" pattern=".{6,}" required
         title="6 Characters Minimum" placeholder="Re-enter Password"><br />
 
-      <input type="submit" value="Register" class="btn">
+      <input type="submit" value="Register" class="btn" onclick="passvalue();">
+
+      <!--Code for old users to redirect themselves to login-->
+       <input type="button" name="olduser" value="Users Click Here!" class="btn2"
+      onclick="window.location='./login.html' + document.location.search;">
       
     </form>
     <script>
       //saves the query string from the products page for the invoice
       Register.action += document.location.search; 
     </script>
+
+
     </div>
-    <!--Code for old users to redirect themselves to login-->
-    <input type="button" name="olduser" value="Users Click Here!" class="btn2"
-      onclick="window.location='./login.html' + document.location.search;">
+    
+   
