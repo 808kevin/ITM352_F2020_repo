@@ -42,7 +42,7 @@ app.post("/login_form", function (req, res) {
     console.log(req.body);
     the_username = req.body.username.toLowerCase();// making username lowercase
     if (typeof users_reg_data[the_username] != 'undefined'){
-        if (req.body.password == users_reg_data[req.body.username].password){
+        if (req.body.password == users_reg_data[req.body.username].password){ //redirects user to invoice after login
             res.redirect('./invoice.html?' + purchase_qs);
 
         } else { //notifies user of invalid password
@@ -58,10 +58,10 @@ app.post("/login_form", function (req, res) {
             req.query.username = the_username;
             req.query.LogError = LogError.join(';')
         }
-        res.redirect('./login.html?' + qs.stringify(req.query));
+        res.redirect('./login.html?' + purchase_qs);
 });
 
-//Making Account / validation code (Referenced from Alyssa and Daphne)
+//Making Account / validatting account code (Referenced from Alyssa and Daphne)
 app.post ("/process_register", function (req, res) {
     var errors = [];
     var reguser = req.body.username.toLowerCase();
@@ -69,7 +69,7 @@ app.post ("/process_register", function (req, res) {
     if (typeof users_reg_data[reguser] != 'undefined') {
         errors.push('Username Taken')
     }
-//makes user use only letters and numbers
+//Makes user use only letters and numbers
 if (/^[0-9a-zA-Z]+$/.test(req.body.username)) {
 }
 else {
@@ -83,7 +83,7 @@ if (req.body.password.length < 6) {
   if (req.body.password !== req.body.repeat_password) { 
     errors.push('Password Not a Match')
   }
-  //if there are no errors this saves the user's registration in the json made with help from lab 14
+  //Saves user's registration in user_data.json (from lab 14)
   if (errors.length == 0) {
     POST = req.body
     console.log('no errors')
@@ -96,7 +96,7 @@ if (req.body.password.length < 6) {
     fs.writeFileSync(filename, data, "utf-8");
     res.redirect('./invoice.html?' + purchase_qs);
   }
-  //of there are errors log them in the console and direct user again to the register page
+  //If there are errors log them in the console and direct user again to the register page
   if (errors.length > 0) {
       console.log(errors)
       req.query.name = req.body.name;
@@ -106,7 +106,7 @@ if (req.body.password.length < 6) {
       req.query.email = req.body.email;
 
       req.query.errors = errors.join(';');
-      res.redirect('register.html?' + qs.stringify(req.query));
+      res.redirect('register.html?' + purchase_qs);
   }
 });
 
