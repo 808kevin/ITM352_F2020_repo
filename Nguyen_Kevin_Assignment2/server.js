@@ -45,14 +45,14 @@ app.post("/login_form", function (req, res) {
         if (req.body.password == users_reg_data[req.body.username].password){ //redirects user to invoice after login
             res.redirect('./invoice.html?' + purchase_qs);
 
-        } else { //notifies user of invalid password
+        } else { //notifies user of invalid password (Borrowed from Alyssa)
             LogError.psuh = ('Invalid Password');
             console.log(LogError);
             req.query.username = the_username;
             req.query.name = users_reg_data[the_username].name;
             req.query.LogError = LogError.join(';');
         }
-        } else { //notifies user of invalid username
+        } else { //notifies user of invalid username (Borrowed from Alyssa)
             LogError.push = ('Invalid Username');
             console.log(LogError);
             req.query.username = the_username;
@@ -61,7 +61,7 @@ app.post("/login_form", function (req, res) {
         res.redirect('./login.html?' + purchase_qs);
 });
 
-//Making Account / validatting account code (Borrowed from Alyssa)
+//Making Account / validatting account code 
 app.post ("/process_register", function (req, res) {
     var errors = [];
     var reguser = req.body.username.toLowerCase();
@@ -69,17 +69,17 @@ app.post ("/process_register", function (req, res) {
     if (typeof users_reg_data[reguser] != 'undefined') {
         errors.push('Username Taken')
     }
-//Makes user use only letters and numbers (Borrowed from Alyssa)
+//Makes user use only letters and numbers 
 if (/^[0-9a-zA-Z]+$/.test(req.body.username)) {
 }
 else {
   errors.push('Letters And Numbers Only for Username')
 }
-//Password character requirement(Borrowed from Alyssa)
+//Password character requirement
 if (req.body.password.length < 6) {
     errors.push('Password Too Short')
   }
-  // Making sure passwords are the same (Borrowed from Alyssa)
+  // Making sure passwords are the same 
   if (req.body.password !== req.body.repeat_password) { 
     errors.push('Password Not a Match')
   }
