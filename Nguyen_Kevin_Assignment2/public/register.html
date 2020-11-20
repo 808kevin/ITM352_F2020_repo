@@ -1,25 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<script>
+  //Alert for User/Password Error
+  let params = (new URL(document.location)).searchParams;
+
+  window.onload = function () {
+    if (params.has('LogError')) {
+      alert('Invalid Username or Passowrd');
+    }
+  }
+</script>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <title>Document</title>
 </head>
 
 <body>
 
+  <style>
+    .w3-sidebar a {
+      font-family: "Roboto", sans-serif
+    }
 
-  <h1>Register</h1>
-  <!--Code to make register form from Lab14-->
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    .w3-wide {
+      font-family: "Montserrat", sans-serif;
+    }
+  </style>
+  <!-- Sidebar/menu -->
+  <nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
+    <div class="w3-container w3-display-container w3-padding-16">
+      <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
+      <h3 class="w3-wide"><b>Creative Jewelry</b></h3>
 
-  <body>
+
+  </nav>
+  <div class="w3-main" style="margin-left:450px">
+
+    <!-- Top header -->
+
+    </header>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="w3-container w3-text-black" id="Rings">
+      <p>Register</p>
+    </div>
+
     <form method="POST" action="process_register" name="Register">
       <!--Referenced from Lab14, Stackoverflow and w3resources(for the patterns)-->
       <input type="text" name="username" size="40" pattern=".[a-z0-9]{4,10}$" required
-      title="Min: 4 Character, Max: 10 Characters, Numbers & Letters Only" placeholder="Enter Username"><br/>
+        title="Min: 4 Character, Max: 10 Characters, Numbers & Letters Only" placeholder="Enter Username"><br />
 
-      <input type="email" name="email" size="40" placeholder="Enter Email" pattern="[a-z0-9._]+@[a-z0-9]+\.[a-z]{2,}$" required title="Please enter valid email."><br/> 
+      <input type="email" name="email" size="40" placeholder="Enter Email" pattern="[a-z0-9._]+@[a-z0-9]+\.[a-z]{2,}$"
+        required title="Please enter valid email."><br />
 
       <input type="password" id="password" name="password" size="40" pattern=".{6,}" required
         title="6 Characters Minimum" placeholder="Enter Password"><br />
@@ -28,15 +82,13 @@
         title="6 Characters Minimum" placeholder="Re-enter Password"><br />
 
       <input type="submit" value="Register" class="btn">
+
+      <input type="button" name="olduser" value="Users Click Here!" class="btn2"
+        onclick="window.location='./login.html' + document.location.search;">
     </form>
     <script>
       //saves the query string from the products page for the invoice
       Register.action += document.location.search; 
     </script>
-    </div>
-    <!--Code for old users to redirect themselves to login-->
-    <input type="button" name="olduser" value="Users Click Here!" class="btn2"
-      onclick="window.location='./login.html' + document.location.search;">
-  </body>
-
-</html>
+  </div>
+  <!--Code for old users to redirect themselves to login-->
