@@ -26,7 +26,7 @@ app.get("/get_products", function (request, response) {
 
 app.use(myParser.urlencoded({ extended: true }));
 
-//Borrowed code for processing login/registration is from Alyssa, Daphne and Professor Port (big thanks to these people)
+//Borrowed code for processing login/registration is from Alyssa, with assistance from Daphne and Professor Port (big thanks to these people)
 //Checking filename user_data.json
 if (fs.existsSync(filename)) {
     stats = fs.statSync(filename);
@@ -36,7 +36,7 @@ if (fs.existsSync(filename)) {
     console.log(`ERR: ${filename} does not exist!`);
 }
 
-//User Login code (Referenced from Alyssa with assistance from Daphne)
+//User Login code (Borrowed from Alyssa)
 app.post("/login_form", function (req, res) {
     var LogError = [];
     console.log(req.body);
@@ -61,7 +61,7 @@ app.post("/login_form", function (req, res) {
         res.redirect('./login.html?' + purchase_qs);
 });
 
-//Making Account / validatting account code (Referenced from Alyssa with assistance from Daphne)
+//Making Account / validatting account code (Borrowed from Alyssa)
 app.post ("/process_register", function (req, res) {
     var errors = [];
     var reguser = req.body.username.toLowerCase();
@@ -69,17 +69,17 @@ app.post ("/process_register", function (req, res) {
     if (typeof users_reg_data[reguser] != 'undefined') {
         errors.push('Username Taken')
     }
-//Makes user use only letters and numbers (Referenced from Alyssa with assistance from Daphne)
+//Makes user use only letters and numbers (Borrowed from Alyssa)
 if (/^[0-9a-zA-Z]+$/.test(req.body.username)) {
 }
 else {
   errors.push('Letters And Numbers Only for Username')
 }
-//Password character requirement(Referenced from Alyssa with assistance from Daphne)
+//Password character requirement(Borrowed from Alyssa)
 if (req.body.password.length < 6) {
     errors.push('Password Too Short')
   }
-  // Making sure passwords are the same (Referenced from Alyssa with assistance from Daphne)
+  // Making sure passwords are the same (Borrowed from Alyssa)
   if (req.body.password !== req.body.repeat_password) { 
     errors.push('Password Not a Match')
   }
