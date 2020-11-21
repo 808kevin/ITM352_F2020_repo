@@ -120,11 +120,11 @@
               
                     <div class="col-sm-4">
                     <div class="panel panel-success">
-                    <div class="panel-heading">${products[i].name}</div>
+                    <div class="panel-heading" align="center">${products[i].name}</div>
                     <h2></h2>
                     <div class="panel-body"> <img src=${products[i].image} style="width:100%" alt="Image"></div>
-                    <p>$${products[i].price}</p>
-                    <div class="panel-footer"><label id="quantity${i}_label"}">Quantity</label>
+                    <div align="center">$${products[i].price}</div>
+                    <div class="panel-footer" align="center"><label id="quantity${i}_label"}">Quantity</label>
                     <input type = "text" placeholder = "0" name = "quantity${i}" 
                     onkeyup="checkQuantityTextbox(this);">
                    
@@ -138,14 +138,12 @@
         </script>
       </main>
     </div>
-
-
+    
+    <div class="container">
+      <div class="center">
     <!--This is the submit button to send user to the invoice-->
-    <input type="submit" value="Purchase" name="purchase_submit">
-
-
-
-
+    <input type="submit" value="Purchase" name="purchase_submit" class="btn" >
 </div>
-
+</form>
+</body>
 </html>
