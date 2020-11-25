@@ -25,7 +25,7 @@ app.get("/get_products", function (request, response) {
 
 app.use(myParser.urlencoded({ extended: true }));
 
-//Borrowed code for processing login/registration is from Alyssa, with assistance from Daphne and Professor Port (big thanks to these people)
+//Borrowed code for processing login/registration from Alyssa, with assistance from Daphne and Professor Port 
 //Checking filename user_data.json
 if (fs.existsSync(filename)) {
     stats = fs.statSync(filename);
@@ -38,43 +38,45 @@ if (fs.existsSync(filename)) {
 //User Login code (Borrowed from Alyssa)
 app.post("/login_form", function (req, res) {
     var LogError = [];
-    console.log(req.body);
+    console.log(req.query);
     the_username = req.body.username.toLowerCase();// making username lowercase
     if (typeof users_reg_data[the_username] != 'undefined') {
-        if (req.body.password == users_reg_data[req.body.username].password) { //redirects user to invoice after login
-            res.redirect('./invoice.html?' + purchase_qs);
+        if (req.body.password == users_reg_data[req.body.username].password) { //redirects user to invoice after login, got assistance from Professor Port in 1on1 session
+            res.redirect('./invoice.html?' + purchase_qs + `&username=${the_username}`);
 
         } else { //notifies user of invalid password (Borrowed from Alyssa)
-            LogError.psuh = ('Invalid Password');
+            LogError.push('Invalid Password');
             console.log(LogError);
             req.query.username = the_username;
             req.query.name = users_reg_data[the_username].name;
             req.query.LogError = LogError.join(';');
         }
     } else { //notifies user of invalid username (Borrowed from Alyssa)
-        LogError.push = ('Invalid Username');
+        LogError.push('Invalid Username');
         console.log(LogError);
         req.query.username = the_username;
         req.query.LogError = LogError.join(';')
     }
-    res.redirect('./login.html?' + purchase_qs);
+    
+    res.redirect('./login.html?' + purchase_qs + qs.stringify(req.query));
 });
 
-//Making Account / validatting account code 
+//Making Account / validatting account code (Borrowed from Alyssa)
 app.post("/process_register", function (req, res) {
     var errors = [];
     var reguser = req.body.username.toLowerCase();
 
     if (typeof users_reg_data[reguser] != 'undefined') {
-        errors.push('Username Taken')
+        //notifes user if a username is taken
+        errors.push('Username Taken') 
     }
     //Use of only letters for Full Name
-    if (/^[A-Za-z]+$/.test(req.body.name)) { 
+    if (/^[A-Za-z]+$/.test(req.body.name)) {
     }
     else {
         errors.push('Use Only Letters for Full Name');
     }
-    // validating that it is a Full Name
+    // validating Full Name
     if (req.body.name == "") {
         errors.push('Invalid Full Name');
     }
@@ -82,7 +84,6 @@ app.post("/process_register", function (req, res) {
     if ((req.body.fullname.length > 25 && req.body.fullname.length < 0)) {
         errors.push('Full Name Too Long');
     }
-
     //Makes user use only letters and numbers 
     if (/^[0-9a-zA-Z]+$/.test(req.body.username)) {
     }
@@ -97,21 +98,24 @@ app.post("/process_register", function (req, res) {
     if (req.body.password !== req.body.repeat_password) {
         errors.push('Password Not a Match')
     }
-    //Saves user's registration in user_data.json (Referenced from lab 14)
+    //Saves user's registration in user_data.json (Referenced from lab 14) Got assistance from Professor Port during 1on1
+    username = req.body.username;
+    req.query.username = username;
+   purchase_qs = qs.stringify (req.query);
     if (errors.length == 0) {
         POST = req.body
         console.log('no errors')
-        var username = POST['username'];
-        users_reg_data[username] = {}; //make it 'users'
-        users_reg_data[username].name = username;
-        users_reg_data[username].password = POST['password'];
-        users_reg_data[username].email = POST['email'];
-        data = JSON.stringify(users_reg_data); //change to users 
+        users_reg_data[username] = {};
+        users_reg_data[username].name = req.body.username;
+        users_reg_data[username].password = req.body['password'];
+        users_reg_data[username].email = req.body['email'];
+        data = JSON.stringify(users_reg_data);
         fs.writeFileSync(filename, data, "utf-8");
         res.redirect('./invoice.html?' + purchase_qs);
     }
     //Keeping user at register page due to error/Logging it in console
-    if (errors.length > 0) {
+     else {
+    
         console.log(errors)
         req.query.name = req.body.name;
         req.query.username = req.body.username;
@@ -120,7 +124,8 @@ app.post("/process_register", function (req, res) {
         req.query.email = req.body.email;
 
         req.query.errors = errors.join(';');
-        res.redirect('register.html?' + purchase_qs);
+        res.redirect('./register.html?' + purchase_qs);
+
     }
 });
 
@@ -134,6 +139,7 @@ app.post("/process_form", function (request, response, next) {
     var totlpurchases = false; //Check if there were any inputs and blank.
     for (i = 0; i < products.length; i++) {
         aqty = request.body[`quantity${i}`];
+
         if (isNonNegIntString(aqty) == false) {
             validqty &= false; //Invalid data 
 
@@ -151,7 +157,8 @@ app.post("/process_form", function (request, response, next) {
     }
     //If data isn't valid reload main page. 
     else {
-        response.redirect("./index.html?");
+        response_string = "<script>alert('Error:Please enter valid quantities!'); window.history.back()</script>";
+        response.send(response_string);
     }
 
 });
