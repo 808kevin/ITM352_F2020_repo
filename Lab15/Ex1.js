@@ -5,6 +5,10 @@ var myParser = require("body-parser");
 var cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
+var session = require('express-session');
+app.use(session({secret: "ITM352 rocks!"}));
+
+
 const fs = require('fs');
 const { static } = require('express');
 const user_data_filename = 'user_data.json';
@@ -19,12 +23,21 @@ if (fs.existsSync(user_data_filename)) {
 
 }
 
+app.all("*", function (request, response, next) {
+    console.log(request.session, request.cookies);
+    next();
+});
 
-// console.log(user_reg_data, typeof user_reg_data, typeof data);
-// console.log(user_reg_data['dport']['password'], typeof user_reg_data['dport']['password']);
 
 // output login form
 app.use(myParser.urlencoded({ extended: true }));
+
+app.get("/use_session", function(request, response) {
+    console.log('session id is ' + request.session.id);
+    if(typeof request.session.id != 'undefined'){
+        response.send(`welcome, your session ID is ${request.session.id}`)
+    }
+});
 
 app.get("/set_cookie", function (request, response) {
 response.cookie('myname', 'Dan');
@@ -80,8 +93,16 @@ app.post("/process_register", function (request, response) {
 
 app.get("/login", function (request, response) {
     // Give a simple login form
+    console.log(request.session);
+    if(request.session.lastLogin) {
+        lastLogin = request.session["lastLogin"];
+    }
+    else {
+        lastLogin = 'First login!';
+    }
     str = `
 <body>
+
 <form action="process_login" method="POST">
 <input type="text" name="username" size="40" placeholder="enter username" ><br />
 <input type="password" name="password" size="40" placeholder="enter password"><br />
@@ -93,21 +114,25 @@ app.get("/login", function (request, response) {
 });
 
 app.post("/process_login", function (request, response) {
-    // Process login form POST and redirect to logged in page if ok, back to login page if not
-    console.log(request.body);
-    // checks if the user exists; if they exist, get the password
-    if (typeof user_reg_data[request.body['username']] != 'undefined') {
-        userdata = user_reg_data[request.body['username']];
-        console.log(userdata)
-        if (request.body['password'] == userdata.password) {
-            response.send(`thank you for ${request.body['username']} for loggin in`);
-        } else {
-            response.send(` ${request.body['username']} password is incorrect.`);
-        }
-    } else {
-        response.send(` ${request.body['username']} does not exist.`);
-    }
-});
+        // Process login form POST and redirect to logged in page if ok, back to login page if not
+        console.log(request.body);
+        //if user exits, get their password
+        //convert all to lower case when comparing 
+        if (typeof users_reg_data[request.body.username] != 'undefined') {
+            if (request.body.password == users_reg_data[request.body.username].password) {
+                response.send(`Thank you ${request.body.username} for logging in.`);
+                var now = new Date();
+                request.session["lastLogin"] = now.getDate() + ' ' + now.getTime();
+                console.log(`${request.body.username} logged in on ${request.session.lastLogin}`);
+                response.send(`Thank you ${request.body.username} for logging in.`);
+                
+            } else {
+                response.send(`Hey! ${request.body.username} does not match what we have for you!`);
+            }
+        } else {
+            response.send(`Hey! ${request.body.username} does not exits!`);
+        }
+    });
 
 app.listen(8080, () => console.log(`listening on port 8080`));
     
