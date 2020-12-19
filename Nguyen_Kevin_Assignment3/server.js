@@ -254,7 +254,7 @@ app.post("/complete_purch", function (request, response) {
      invoice_str += `
        <tr>
          <td style="text-align: center;" colspan="3" width="67%"><span style="font-family: arial;">Tax @ 5%</span></td>
-         <td width="54%">\$${salesTax.toFixed(2)}</td>
+         <td width="54%">\$${tax.toFixed(2)}</td>
        </tr>
        `;
      invoice_str += `
