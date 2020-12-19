@@ -42,7 +42,6 @@ app.all('*', function (request, response, next) {
     next();
 });
 
-
 //Got this from Assignment 3 Code Example
 app.post("/get_products_data", function (request, response) {
     response.json(products_data);
@@ -66,7 +65,7 @@ app.post("/login_form", function (req, res) {
     if (typeof users_reg_data[the_username] != 'undefined') {
         if (req.body.password == users_reg_data[req.body.username].password) { //redirects user to invoice after login, got assistance from Professor Port in 1on1 session
             req.session.username = the_username;
-            res.redirect('./products_display.html');
+            res.redirect('./index.html');
             
         } else { //notifies user of invalid password (Borrowed from Alyssa)
             LogError.push('Invalid Password');
@@ -215,6 +214,7 @@ app.post("/complete_purch", function (request, response) {
  
      //Combined the code from A3 Example Code along with Code from Invoice to make the thing being sent to email
      user_email = users_reg_data[request.session.username]["email"];
+     var output_message = `Thank you ${users_reg_data[request.session.username]["name"]} for your order`;
      var invoice_str = `Thank you for your order!<table border><th>Item</th><th>Quantity</th><th>Price</th><th>Extended Price</th>`;
      var shopping_cart = request.session.cart;
      subtotal = 0;
@@ -230,28 +230,30 @@ app.post("/complete_purch", function (request, response) {
          }
      }
      // Compute Sales Tax
-     var salesTax = subtotal * 0.0575;
- 
+     var tax = 0.05 * subtotal;
+
      // Compute Grand Total
-     var grandTotal = subtotal + salesTax;
+     var total = subtotal + tax + shipping;
  
      var shipping = 0;
-     if (subtotal < 50) {
-         shipping = 2.00;
-     }
-     else if (subtotal > 50 && subtotal < 100) {
-         shipping = 5.00;
-     }
-     else if (subtotal > 100) {
-         shipping = subtotal * 0.05;
-     }
+     // Compute shipping
+     if (subtotal <= 50) {
+        shipping = 2;
+      }
+      if (subtotal <= 100) {
+        shipping = 5;
+      }
+      else {
+        shipping = 0.05 * subtotal; // 5% of subtotal
+
+      }
      invoice_str += `<tr>
      <td style="text-align: center;" colspan="3" width="67%">Sub-total</td>
      <td width="54%">\$${subtotal.toFixed(2)}</td>
    </tr>`;
      invoice_str += `
        <tr>
-         <td style="text-align: center;" colspan="3" width="67%"><span style="font-family: arial;">Tax @ 5.75%</span></td>
+         <td style="text-align: center;" colspan="3" width="67%"><span style="font-family: arial;">Tax @ 5%</span></td>
          <td width="54%">\$${salesTax.toFixed(2)}</td>
        </tr>
        `;
@@ -263,7 +265,7 @@ app.post("/complete_purch", function (request, response) {
        invoice_str += `
        <tr>
          <td style="text-align: center;" colspan="3" width="67%"><strong>Total</strong></td>
-         <td width="54%"><strong>$${grandTotal.toFixed(2)}</strong></td>
+         <td width="54%"><strong>\$${total.toFixed(2)}</strong></td>
        </tr>
        `;
      invoice_str += '</table>';
@@ -287,14 +289,16 @@ app.post("/complete_purch", function (request, response) {
          html: invoice_str
      };
  
+     
      transporter.sendMail(mailOptions, function (error, info) {
-         if (error) {
-             invoice_str += `<br>There was an error and your invoice could not be emailed : to ${user_email}`;
-         } else {
-             invoice_str += `<br>Your invoice was mailed to ${user_email}`;
-         }
-         response.send(invoice_str);
-     });
+        
+        if (error) {
+            output_message += `<br>There was an error and your invoice could not be emailed : to ${user_email}`;
+        } else {
+            output_message += `<br>Your invoice was mailed to ${user_email}`;
+        }
+        response.send(output_message);
+    });
  
  });
 
