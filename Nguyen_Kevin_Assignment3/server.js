@@ -229,11 +229,11 @@ app.post("/complete_purch", function (request, response) {
              }
          }
      }
+     //Made this code to make the invoice table in email with Daphe
      // Compute Sales Tax
      var tax = 0.05 * subtotal;
 
-     // Compute Grand Total
-     var total = subtotal + tax + shipping;
+     
  
      var shipping = 0;
      // Compute shipping
@@ -247,6 +247,9 @@ app.post("/complete_purch", function (request, response) {
         shipping = 0.05 * subtotal; // 5% of subtotal
 
       }
+// Compute Grand Total
+     var total = subtotal + tax + shipping;
+
      invoice_str += `<tr>
      <td style="text-align: center;" colspan="3" width="67%">Sub-total</td>
      <td width="54%">\$${subtotal.toFixed(2)}</td>
