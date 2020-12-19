@@ -229,7 +229,7 @@ app.post("/complete_purch", function (request, response) {
              }
          }
      }
-     //Made this code to make the invoice table in email with Daphe
+     //Made this code to make the invoice table in email with assistance from Daphe
      // Compute Sales Tax
      var tax = 0.05 * subtotal;
 
