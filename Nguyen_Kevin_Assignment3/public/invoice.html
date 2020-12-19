@@ -1,0 +1,390 @@
+<script src="./functions.js"></script>
+
+<!-- Got this code from Assignment1 example-->
+
+<script>
+
+  let params = (new URL(document.location)).searchParams;
+  var quantities = [];
+  // Load products data
+  var products_data;
+  loadJSON('get_products_data', function (response) {
+    // Parsing JSON string into object
+    products_data = JSON.parse(response);
+  });
+
+  var cart
+  loadJSON('get_cart_data', function (response) {
+    // Parsing JSON string into object
+    cart = JSON.parse(response);
+  });
+  console.log(cart, products_data);
+
+  //Borrowed from Landon, gets username when entered (then saved for query string in server.js) for personalization
+  if (params.has('username')) {
+    var name = params.get('name');
+    var username = params.get('username');
+  }
+
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <title>Document</title>
+  <title>CreativeJewelryInvoice</title>
+  <style>
+    body {
+      transform: scale(1);
+      transform-origin: 0 0;
+
+    }
+
+    /** Borrowed Code from WesCossick for aesthetics  **/
+    .invoice-box {
+      max-width: 800px;
+      margin: auto;
+      padding: 30px;
+      border: 1px solid #eee;
+      box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+      font-size: 16px;
+      line-height: 24px;
+      font-family: "Montserrat", sans-serif;
+      color: #555;
+    }
+
+    /** Borrowed Code from WesCossick for aesthetics  **/
+    .invoice-box table {
+      width: 100%;
+      line-height: inherit;
+      text-align: left;
+    }
+
+    /** Borrowed Code from WesCossick for aesthetics   **/
+    .invoice-box table td {
+      padding: 5px;
+      vertical-align: top;
+    }
+
+    /** Borrowed Code from WesCossick for aesthetics **/
+    .invoice-box table tr td:nth-child(2) {
+      text-align: right;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="invoice-box">
+
+    <h1>Creative Jewelry</h1>
+    <!-- Got this code from invoice4-->
+    <br>
+    </ul>
+    <table border="2">
+
+
+      <div class="panel panel-success">
+        <div class="panel-body">
+
+        
+
+            <body>
+              <!-- Gets the username from query string then puts in for personalization-->
+              <script>document.write(`Aloha ${params.get('username')}! Please review your purchases below.`);</script>
+            </body>
+
+            <tbody>
+              <th style="text-align: center;" width="43%">Item</th>
+              <th style="text-align: center;" width="11%">Quantity</th>
+              <th style="text-align: center;" width="13%">Price</th>
+              <th style="text-align: center;" width="54%">Extended price</th>
+              </tr>
+              <script>
+
+                //loop to make product rows
+                subtotal = 0;
+                for (pk in cart) {
+
+
+                  for (i in cart[pk]) {
+                    qty = cart[pk][i]
+
+                    if (qty > 0) {
+
+                      ext_price = qty * products_data[pk][i]["price"];
+                      subtotal += ext_price;
+                      // Makes the table for invoice
+                      document.write(`
+      <tr>
+        <td width="43%">${products_data[pk][i]["name"]}</td> 
+        <td align="center" width="11%">${qty}</td>
+        <td width="13%">\$${products_data[pk][i]["price"].toFixed(2)}</td>
+        <td width="54%">\$${ext_price.toFixed(2)}</td>
+      </tr>
+      `);
+                    }
+                  }
+                }
+                // Compute tax
+                var tax_rate = 0.05;
+                var tax = tax_rate * subtotal;
+
+                // Compute shipping
+                if (subtotal <= 50) {
+                  shipping = 2;
+                }
+                if (subtotal <= 100) {
+                  shipping = 5;
+                }
+                else {
+                  shipping = 0.05 * subtotal; // 5% of subtotal
+                  
+                }
+
+                // Compute grand totals
+                var total = subtotal + tax + shipping;
+              
+              //makes the bottom part of invoice
+              </script>
+              <tr>
+                <td colspan="4" width="100%">&nbsp;</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;" colspan="3" width="67%">Sub-total</td>
+                <td width="54%">$
+                  <script>document.write(subtotal);</script>
+                </td>
+              </tr>
+              <tr>
+                <td style="text-align: center;" colspan="3" width="67%"><span style="font-family: arial;">Tax @
+                    <script>document.write(100 * tax_rate);</script>%
+                  </span></td>
+                <td width="54%">$
+                  <script>document.write(tax.toFixed(2));</script>
+                </td>
+              </tr>
+              <tr>
+                <td style="text-align: center;" colspan="3" width="67%">Shipping</span></td>
+                <td width="54%">$
+                  <script>document.write(shipping.toFixed(2));</script>
+                </td>
+              </tr>
+              <tr>
+                <td style="text-align: center;" colspan="3" width="67%"><strong>Total</strong></td>
+                <td width="54%"><strong>$
+                    <script>document.write(total.toFixed(2));</script>
+                  </strong></td>
+              </tr>
+            </tbody>
+    </table>
+    <div>
+      <br><b>
+        OUR SHIPPING POLICY IS:
+        <br>A subtotal of $0 - $49.99 will be $2 shipping
+        <br>A subtotal of $50 - $99.99 will be $5 shipping
+        <br> Subtotals over $100 will be charged 5% of the subtotal amount
+      </b>
+    </div>
+
+
+
+    <!--CHECKOUTSHEET-->
+    <!--Sampled this checkout sheet from https://www.w3schools.com/howto/howto_css_checkout_form.asp -->
+    <style>
+      body {
+        font-family: Arial;
+        font-size: 17px;
+        padding: 8px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      .row {
+        display: -ms-flexbox;
+        /* IE10 */
+        display: flex;
+        -ms-flex-wrap: wrap;
+        /* IE10 */
+        flex-wrap: wrap;
+        margin: 0 -16px;
+      }
+
+      .col-25 {
+        -ms-flex: 25%;
+        /* IE10 */
+        flex: 25%;
+      }
+
+      .col-50 {
+        -ms-flex: 50%;
+        /* IE10 */
+        flex: 50%;
+      }
+
+      .col-75 {
+        -ms-flex: 75%;
+        /* IE10 */
+        flex: 75%;
+      }
+
+      .col-25,
+      .col-50,
+      .col-75 {
+        padding: 0 16px;
+      }
+
+      .container {
+        background-color: #f2f2f2;
+        padding: 5px 20px 15px 20px;
+        border: 1px solid lightgrey;
+        border-radius: 3px;
+      }
+
+      input[type=text] {
+        width: 100%;
+        margin-bottom: 20px;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+      }
+
+      label {
+        margin-bottom: 10px;
+        display: block;
+      }
+
+      .icon-container {
+        margin-bottom: 20px;
+        padding: 7px 0;
+        font-size: 24px;
+      }
+
+      .btn {
+        background-color: #84d688;
+        color: white;
+        padding: 12px;
+        margin: 10px 0;
+        border: none;
+        width: 100%;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 17px;
+      }
+
+      .btn:hover {
+        background-color: #84d688;
+      }
+
+      a {
+        color: #2196F3;
+      }
+
+      hr {
+        border: 1px solid lightgrey;
+      }
+
+      span.price {
+        float: right;
+        color: grey;
+      }
+
+
+      @media (max-width: 800px) {
+        .row {
+          flex-direction: column-reverse;
+        }
+
+        .col-25 {
+          margin-bottom: 20px;
+        }
+      }
+    </style>
+    </head>
+
+    <!--Makes the checkout form sampled from https://www.w3schools.com/howto/howto_css_checkout_form.asp-->
+
+    <body>
+
+      <form action="/complete_purch" method="POST">
+
+        <div class="row">
+          <div class="col-50">
+            <h3>Billing Address</h3>
+            <label for="fname"><i class="fa fa-user"></i> Full Name</label>
+            <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
+            <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
+            <input type="text" id="adr" name="address" placeholder="542 W. 15th Street">
+            <label for="city"><i class="fa fa-institution"></i> City</label>
+            <input type="text" id="city" name="city" placeholder="New York">
+
+            <div class="row">
+              <div class="col-50">
+                <label for="state">State</label>
+                <input type="text" id="state" name="state" placeholder="NY">
+              </div>
+              <div class="col-50">
+                <label for="zip">Zip</label>
+                <input type="text" id="zip" name="zip" placeholder="10001">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-50">
+            <h3>Payment</h3>
+            <label for="fname">Accepted Cards</label>
+            <div class="icon-container">
+              <i class="fa fa-cc-visa" style="color:navy;"></i>
+              <i class="fa fa-cc-amex" style="color:blue;"></i>
+              <i class="fa fa-cc-mastercard" style="color:red;"></i>
+              <i class="fa fa-cc-discover" style="color:orange;"></i>
+            </div>
+            <label for="cname">Name on Card</label>
+            <input type="text" id="cname" name="cardname" placeholder="John More Doe">
+            <label for="ccnum">Credit card number</label>
+            <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
+            <label for="expmonth">Exp Month</label>
+            <input type="text" id="expmonth" name="expmonth" placeholder="November">
+            <div class="row">
+              <div class="col-50">
+                <label for="expyear">Exp Year</label>
+                <input type="text" id="expyear" name="expyear" placeholder="2020">
+              </div>
+              <div class="col-50">
+                <label for="cvv">CVV</label>
+                <input type="text" id="cvv" name="cvv" placeholder="352">
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <label>
+          <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
+        </label>
+        <input type="submit" value="Complete Purchase" class="btn" >
+      </form>
+  </div>
+  </div>
+
+
+</body>
+
+</html>
+
+</body>
+
+</html>

@@ -1,0 +1,202 @@
+<!--Kevin Nguyen, 11/2/2020, All this code is the layout of my shops design-->
+
+</script>
+<!--Code from Assignment 3 Example code to utilize functions.js in getting the mutliple pages/products-->
+          <script src="./functions.js"></script>
+         
+    
+
+<script>
+  var products_data;
+  var total = 0;
+  loadJSON('get_products_data', function (response) {
+      // Parsing JSON string into object
+      products_data = JSON.parse(response);
+  });
+
+  var cart
+  loadJSON('get_cart_data', function (response) {
+      // Parsing JSON string into object
+      cart = JSON.parse(response);
+  });
+
+  let params = (new URL(document.location)).searchParams;
+              if (params.has('products_key')) {
+                  var products_key = params.get('products_key');
+              }
+
+  </script>
+
+
+<!-- Template borrowed from W3 Template and Bootstrap  :) -->
+<!DOCTYPE html>
+<html>
+<title>Creative Jewelry</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<script> src="store.js"</script>
+
+<!--Font used for text-->
+<style>
+  .w3-sidebar a {
+    font-family: "Roboto", sans-serif
+  }
+
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .w3-wide {
+    font-family: "Montserrat", sans-serif;
+  }
+</style>
+
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
+  <div class="w3-container w3-display-container w3-padding-16">
+    <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
+    <h3 class="w3-wide"><a  style="color:black">Creative Jewelry</a></h3>
+    
+</nav>
+
+
+
+
+</div>
+
+   
+  
+  </ul>
+</div>
+</div>
+</nav>
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:250px">
+
+  <!-- Top header -->
+  <header class="w3-container w3-xlarge">
+    <p class="w3-left"></p>
+    <p class="w3-right">
+    </p>
+  </header>
+
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <div class="w3-container w3-text-black" id="Rings">
+   
+  </div>
+
+  
+  <!-- Product grid -->
+
+  <!--Makes the form action go to invoice through post-->
+  <form name="product_main_display" action="./checkout" method="POST">
+    <!--Product Loop-->
+    <script>
+    </script>
+    <div>
+      <main>
+
+        <head>
+
+
+      </head>
+
+<!--Code from Assigntment 3 Examaple Code to make nav bar using the products key in json file-->
+<input type="button" value="Back to shopping" onclick="window.history.back()" /> 
+
+   
+    
+
+
+        
+        <div class="container">
+          
+                  
+                </h5>
+                
+                </button>
+              </div>
+              <div class="modal-body">
+                <table class="table table-image">
+                  <thead>
+                    <tr>
+                      <th scope="col"></th>
+                      <th scope="col">Product</th>
+                      <th scope="col">Price</th>
+                      <th scope="col">Qty</th>
+                       <th scope="col">Edit Qty</th>
+                      <th scope="col">Total</th>
+                      
+                    </tr>
+                  </thead>
+                  <tbody>
+         <script>
+        //Makes the product loop in the shopping cart gathering the items in cart
+           for (pk in cart){
+             for(i in cart[pk]){
+               qty = cart[pk][i]
+        
+              if(qty > 0){
+          
+           ext_price = qty  * products_data[pk][i]["price"];
+        
+           document.write(`
+                    <tr>
+                      <td class="w-25">
+                        <img src=${products_data[pk][i]["image"]} class="img-fluid img-thumbnail" alt="Sheep">
+                      </td>
+                      <td>${products_data[pk][i]["name"]}</td>
+                      <td>\$${products_data[pk][i]["price"].toFixed(2)}</td>
+                      <td class="qty">${qty}</td>
+                      <td class="qty"><input type="button" value="Back to Edit" onclick="window.history.back()"/> </td>
+                      <td>\$${ext_price.toFixed(2)}</td>
+                      
+                    </tr>`
+                    );
+                  }
+           }
+          }
+        </script>
+        
+                  </tbody>
+                </table> 
+                <div class="d-flex justify-content-end">
+                  <h5>Total: <span class="price text-success">Will Be Figured Out On invoice</span></h5>
+                </div>
+              </div>
+              <div class="modal-footer border-top-0 d-flex justify-content-between">
+                <button type="submit" value="Purchase" name="purchase_submit" class="btn" >Checkout</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+
+
+
+    
+   </div>
+   
+    
+  </form>
+  
+  </body>
+  
+</html>
